@@ -33,12 +33,16 @@ Your work will be evaluated against the following criteria:
 
 
 # Assumptions
-- Input and output files are a csv file with 2 columns of zip codes. However, any type of input file with a comma separater would work for this code.
+- Input and output files are a csv file with 2 columns of zip codes. However, any type of input file with a comma separator would work for this code.
 - Zip Codes can be in any range format (First one smaller and second one bigger or vice versa).
-- Zip Codes can be in any order. Duplicate ranges are a possiblity.
-- Zip Code 99999 is considered as the biggest possible input. Any zipcode bigger than this zip code are not considered in input for processing.
+- Zip Codes can be in any order. Duplicate ranges are a possibility.
+- Zip Code 99999 is considered as the biggest possible input and 00000 is considered as the smallest possible input. Any zipcode bigger than this zip code are not considered in input for processing as well as any smaller number then the smallest possible input will be discarded too.
 - Empty input file would result in empty output file.
 
 # Time and Space Complexity
 - Time complexity   is O(n*long(n)) (Sort followed by Merge)
-- Space Complexity  is O(n) (additional DS for results)
+- Space Complexity  is O(n) (additional Data Structure for results)
+
+# Execution Process
+- Execute the "ExecuteMe.java" file in src folder.
+- Provide input file (comma separated) name and output file name on terminal when prompted.
