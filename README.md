@@ -40,5 +40,5 @@ Your work will be evaluated against the following criteria:
 - Empty input file would result in empty output file.
 
 # Time and Space Complexity
-  Time complexity   is O(n*long(n)) (Sort followed by Merge)
-  Space Complexity  is O(n) (additional DS for results)
+- Time complexity   is O(n*long(n)) (Sort followed by Merge)
+- Space Complexity  is O(n) (additional DS for results)
