@@ -53,7 +53,7 @@ public class ExecuteMe {
 		String currentLine;
 		try {
 			br = new BufferedReader(new FileReader(inputFile));
-			// D:\EclipseWorkspace\CodeChallengeWilliamsSonoma\resources\input1.txt
+			// D:\EclipseWorkspace\CodeChallengeWilliamsSonoma\resources\input1.csv
 
 			try {
 				while ((currentLine = br.readLine()) != null) {
