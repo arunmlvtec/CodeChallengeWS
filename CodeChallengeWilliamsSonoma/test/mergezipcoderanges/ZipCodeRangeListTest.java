@@ -6,7 +6,6 @@
 package mergezipcoderanges;
 
 import java.util.ArrayList;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,10 +17,11 @@ import org.junit.Test;
  */
 public class ZipCodeRangeListTest {
 	ZipCodeRangeList exec;
-	String expected = "resources/expected/output1.csv";
-	String input = "resources/input/input1.csv";
-	String actual = "resources/actual/actual1.csv";
-	ArrayList<ZipCodeRange> mergedExpecteds, mergedActuals;	
+	String expected = "resources/expected/output0.csv";
+	String input = "resources/input/input0.csv";
+	String actual = "resources/actual/actual0.csv";
+	ArrayList<ZipCodeRange> mergedExpecteds;
+	ArrayList<ZipCodeRange> mergedActuals;	
 	
 	@Before
 	public void before(){
