@@ -40,8 +40,9 @@ public class ZipCodeRange {
 	public void setEnd(String end) {
 		this.end = end;
 	}
-	
-	public String toString () {
-		return this.begin +","+ this.end;
+
+	public String toString() {
+		return this.begin + "," + this.end;
 	}
+
 }

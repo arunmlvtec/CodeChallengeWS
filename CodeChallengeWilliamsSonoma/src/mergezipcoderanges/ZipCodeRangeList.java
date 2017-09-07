@@ -42,18 +42,33 @@ public class ZipCodeRangeList {
 		});
 	}
 
+	public void printRangeList(ArrayList<ZipCodeRange> rangeList) {
+		System.out.println("RangeList Size is: " + rangeList.size());
+		for (ZipCodeRange range : rangeList) {
+			System.out.println(range.getBegin() + "\t" + range.getEnd());
+		}
+	}
+
 	public ArrayList<ZipCodeRange> mergeRange(ArrayList<ZipCodeRange> rangeList) {
-		int rangeListLength = rangeList.size();
+		int rangeListSize = rangeList.size();
 		ArrayList<ZipCodeRange> mergedRangeList = new ArrayList<ZipCodeRange>();
-		if (rangeListLength > 0) {
+		if (rangeListSize > 0) {
 			sortRange(rangeList);
 
 			ZipCodeRange tmp = rangeList.get(0);
 
-			for (int i = 0; i < rangeListLength; i++) {
-				if (((Integer.parseInt(tmp.getEnd()) + 1) == Integer.parseInt(rangeList.get(i).getBegin())
-						|| (Integer.parseInt(tmp.getEnd()) >= Integer.parseInt(rangeList.get(i).getBegin())))) {
-					tmp.setEnd(rangeList.get(i).getEnd());
+			for (int i = 0; i < rangeListSize; i++) {
+				if ((Integer.parseInt(tmp.getEnd()) + 1 == Integer.parseInt(rangeList.get(i).getBegin())
+						|| Integer.parseInt(tmp.getEnd()) >= Integer.parseInt(rangeList.get(i).getBegin()))) {
+
+					// Additional condition to ignore duplicate zip code pairs
+					// and zip codes pairs such as [94100,94199] and
+					// [94136,94136]
+					if (Integer.parseInt(tmp.getEnd()) < Integer.parseInt(rangeList.get(i).getEnd())
+							&& Integer.parseInt(tmp.getBegin()) != Integer.parseInt(rangeList.get(i).getBegin())) {
+						tmp.setEnd(rangeList.get(i).getEnd());
+					}
+
 				} else {
 					mergedRangeList.add(tmp);
 					tmp = rangeList.get(i);
@@ -61,6 +76,8 @@ public class ZipCodeRangeList {
 			}
 			mergedRangeList.add(tmp);
 		}
+		System.out.println("After Removing Duplicates: ");
+		printRangeList(mergedRangeList);
 		return mergedRangeList;
 	}
 
@@ -93,6 +110,7 @@ public class ZipCodeRangeList {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+
 		return rangeList;
 	}
 
@@ -142,10 +160,10 @@ public class ZipCodeRangeList {
 	}
 
 	// Main method from old ExecuteMe class.
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		ZipCodeRangeList rl = new ZipCodeRangeList();
-		String inputFile = "resources\\input\\input1.csv";
-		String outputFile = "resources\\actual\\actual1.csv";
+		String inputFile = "resources\\input\\input0.csv";
+		String outputFile = "resources\\expected\\actual0.csv";
 
 		// Reading input Zip Code Range from the file.
 		ArrayList<ZipCodeRange> rangeList = rl.readInput(inputFile);
@@ -157,6 +175,5 @@ public class ZipCodeRangeList {
 		rl.writeOutput(mergedRangeList, outputFile);
 
 		System.out.println("Execution Completed!");
-	}
-	// */ }
+	}*/
 }
