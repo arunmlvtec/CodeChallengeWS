@@ -5,6 +5,11 @@
  */
 package mergezipcoderanges;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,23 +18,17 @@ import java.util.Comparator;
  * @author arunp date: 2017-August-16
  */
 public class ZipCodeRangeList {
-	private ArrayList<ZipCodeRange> rangeList = new ArrayList<ZipCodeRange>();
 
-	public void addRange(ZipCodeRange range) {
-		this.rangeList.add(range);
+	public void addRange(ZipCodeRange range, ArrayList<ZipCodeRange> rangeList) {
+		rangeList.add(range);
 	}
 
-	public ArrayList<ZipCodeRange> getRangeList() {
-		return this.rangeList;
-	}
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void sortRange(ArrayList<ZipCodeRange> rangeList) {
-		Collections.sort(rangeList, new Comparator() {
+		Collections.sort(rangeList, new Comparator<ZipCodeRange>() {
 
-			public int compare(Object range1, Object range2) {
-				String r1 = ((ZipCodeRange) range1).getBegin();
-				String r2 = ((ZipCodeRange) range2).getBegin();
+			public int compare(ZipCodeRange range1, ZipCodeRange range2) {
+				String r1 = range1.getBegin();
+				String r2 = range2.getBegin();
 				int comp = r1.compareTo(r2);
 
 				if (comp != 0) {
@@ -43,14 +42,7 @@ public class ZipCodeRangeList {
 		});
 	}
 
-	public void printRangeList(ArrayList<ZipCodeRange> rangeList) {
-		System.out.println("RangeList Size is: " + rangeList.size());
-		for (ZipCodeRange range : rangeList) {
-			System.out.println(range.getBegin() + "\t" + range.getEnd());
-		}
-	}
-
-	public ArrayList<ZipCodeRange> mergeRange() {
+	public ArrayList<ZipCodeRange> mergeRange(ArrayList<ZipCodeRange> rangeList) {
 		int rangeListLength = rangeList.size();
 		ArrayList<ZipCodeRange> mergedRangeList = new ArrayList<ZipCodeRange>();
 		if (rangeListLength > 0) {
@@ -71,4 +63,100 @@ public class ZipCodeRangeList {
 		}
 		return mergedRangeList;
 	}
+
+	public ArrayList<ZipCodeRange> readInput(String inputFile) {
+		ArrayList<ZipCodeRange> rangeList = new ArrayList<ZipCodeRange>();
+		BufferedReader br = null;
+
+		String currentLine;
+		try {
+			br = new BufferedReader(new FileReader(inputFile));
+
+			try {
+				while ((currentLine = br.readLine()) != null) {
+					String[] zipCodes = currentLine.split(",");
+					if (validateInput(Integer.parseInt(zipCodes[0])) && validateInput(Integer.parseInt(zipCodes[1]))) {
+						ZipCodeRange range = new ZipCodeRange();
+
+						if (Integer.parseInt(zipCodes[0]) <= Integer.parseInt(zipCodes[1]))
+							range = new ZipCodeRange(zipCodes[0], zipCodes[1]);
+						else
+							range = new ZipCodeRange(zipCodes[1], zipCodes[0]);
+
+						addRange(range, rangeList);
+					}
+				}
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return rangeList;
+	}
+
+	public boolean validateInput(int zipCode) {
+		if (zipCode <= 99999)
+			return true;
+		return false;
+	}
+
+	public void writeOutput(ArrayList<ZipCodeRange> mergedRangeList, String outputFile) {
+		FileWriter writer = null;
+		try {
+			writer = new FileWriter(outputFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (mergedRangeList.size() > 0) {
+			for (ZipCodeRange range : mergedRangeList) {
+				try {
+					writer.write(range.toString() + "\n");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		try {
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<ZipCodeRange> executeMe(String inputFile, String outputFile) {
+		ArrayList<ZipCodeRange> mergedRangeList = new ArrayList<ZipCodeRange>();
+		// Reading input Zip Code Range from the file.
+		ArrayList<ZipCodeRange> rangeList = readInput(inputFile);
+
+		// Sort and Merge the input as per the given requirement.
+		mergedRangeList = mergeRange(rangeList);
+
+		// Write output in the file.
+		writeOutput(mergedRangeList, outputFile);
+
+		System.out.println("Execution Completed!");
+
+		return mergedRangeList;
+	}
+
+	// Main method from old ExecuteMe class.
+	public static void main(String[] args) {
+		ZipCodeRangeList rl = new ZipCodeRangeList();
+		String inputFile = "resources\\input\\input1.csv";
+		String outputFile = "resources\\actual\\actual1.csv";
+
+		// Reading input Zip Code Range from the file.
+		ArrayList<ZipCodeRange> rangeList = rl.readInput(inputFile);
+
+		// Sort and Merge the input as per the given requirement
+		ArrayList<ZipCodeRange> mergedRangeList = rl.mergeRange(rangeList);
+
+		// Write output in the file
+		rl.writeOutput(mergedRangeList, outputFile);
+
+		System.out.println("Execution Completed!");
+	}
+	// */ }
 }
