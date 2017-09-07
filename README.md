@@ -44,5 +44,5 @@ Your work will be evaluated against the following criteria:
 - Space Complexity  is O(n) (additional Data Structure for results)
 
 # Execution Process
-- Execute the "ExecuteMe.java" file in src folder.
-- Provide input file (comma separated) name and output file name on terminal when prompted.
+- In ZipCodeRangeListTest.java file from test folder, provide expected output file (CSV), input file (CSV), and actual output file (CSV) names on line numbers 21, 22, and 23 respectively.
+- Execute the "ZipCodeRangeListTest.java" as a JUnit test case.
