@@ -42,13 +42,6 @@ public class ZipCodeRangeList {
 		});
 	}
 
-	public void printRangeList(ArrayList<ZipCodeRange> rangeList) {
-		System.out.println("RangeList Size is: " + rangeList.size());
-		for (ZipCodeRange range : rangeList) {
-			System.out.println(range.getBegin() + "\t" + range.getEnd());
-		}
-	}
-
 	public ArrayList<ZipCodeRange> mergeRange(ArrayList<ZipCodeRange> rangeList) {
 		int rangeListSize = rangeList.size();
 		ArrayList<ZipCodeRange> mergedRangeList = new ArrayList<ZipCodeRange>();
@@ -61,9 +54,10 @@ public class ZipCodeRangeList {
 				if ((Integer.parseInt(tmp.getEnd()) + 1 == Integer.parseInt(rangeList.get(i).getBegin())
 						|| Integer.parseInt(tmp.getEnd()) >= Integer.parseInt(rangeList.get(i).getBegin()))) {
 
-					// Additional condition to ignore duplicate zip code pairs
-					// and zip codes pairs such as [94100,94199] and
-					// [94136,94136]
+/**					 Additional condition to ignore duplicate zip code pairs
+					 and zip codes pairs such as [94100,94199] and
+					 [94136,94136]
+*/
 					if (Integer.parseInt(tmp.getEnd()) < Integer.parseInt(rangeList.get(i).getEnd())
 							&& Integer.parseInt(tmp.getBegin()) != Integer.parseInt(rangeList.get(i).getBegin())) {
 						tmp.setEnd(rangeList.get(i).getEnd());
@@ -76,8 +70,6 @@ public class ZipCodeRangeList {
 			}
 			mergedRangeList.add(tmp);
 		}
-		System.out.println("After Removing Duplicates: ");
-		printRangeList(mergedRangeList);
 		return mergedRangeList;
 	}
 
@@ -145,6 +137,7 @@ public class ZipCodeRangeList {
 
 	public ArrayList<ZipCodeRange> executeMe(String inputFile, String outputFile) {
 		ArrayList<ZipCodeRange> mergedRangeList = new ArrayList<ZipCodeRange>();
+
 		// Reading input Zip Code Range from the file.
 		ArrayList<ZipCodeRange> rangeList = readInput(inputFile);
 
@@ -158,22 +151,4 @@ public class ZipCodeRangeList {
 
 		return mergedRangeList;
 	}
-
-	// Main method from old ExecuteMe class.
-/*	public static void main(String[] args) {
-		ZipCodeRangeList rl = new ZipCodeRangeList();
-		String inputFile = "resources\\input\\input0.csv";
-		String outputFile = "resources\\expected\\actual0.csv";
-
-		// Reading input Zip Code Range from the file.
-		ArrayList<ZipCodeRange> rangeList = rl.readInput(inputFile);
-
-		// Sort and Merge the input as per the given requirement
-		ArrayList<ZipCodeRange> mergedRangeList = rl.mergeRange(rangeList);
-
-		// Write output in the file
-		rl.writeOutput(mergedRangeList, outputFile);
-
-		System.out.println("Execution Completed!");
-	}*/
 }

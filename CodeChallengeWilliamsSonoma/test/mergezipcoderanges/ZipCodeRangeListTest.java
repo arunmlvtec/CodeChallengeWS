@@ -6,13 +6,14 @@
 package mergezipcoderanges;
 
 import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
- * @author arunp
+ * @author arunp date: 2017-09-07
  *
  */
 public class ZipCodeRangeListTest {
@@ -30,18 +31,19 @@ public class ZipCodeRangeListTest {
 		mergedExpecteds = exec.readInput(expected);
 	}
 	
-	@After
-	public void after() {
-		exec = null;
-		expected = null;
-	}
-	
 	@Test
-	public void testCase1() {
+	public void testCase() {
 		mergedActuals = new ArrayList<ZipCodeRange>();
 		mergedActuals = exec.executeMe(input, actual);
 		for (int i = 0; i < mergedActuals.size(); i++) {
 			Assert.assertEquals(mergedExpecteds.get(i).toString(), mergedActuals.get(i).toString());
 		}
 	}
+	
+	@After
+	public void after() {
+		exec = null;
+		expected = null;
+	}
+	
 }
