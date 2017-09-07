@@ -8,7 +8,7 @@
 package mergezipcoderanges;
 
 /**
- * @author arunp date: 2017/Aug-16
+ * @author arunp date: 2017-Aug-16
  */
 
 public class ZipCodeRange {
@@ -39,5 +39,9 @@ public class ZipCodeRange {
 
 	public void setEnd(String end) {
 		this.end = end;
+	}
+	
+	public String toString () {
+		return this.begin +","+ this.end;
 	}
 }
